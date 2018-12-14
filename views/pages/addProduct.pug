@@ -1,0 +1,25 @@
+extends ../_template
+block content
+    div.container-form
+        form(action="addProduct" method="POST" enctype="multipart/form-data")
+            div.form-group
+                label(for="p_name") Name
+                input(type="text" id="p_name" name="name" class="form-control")
+            div.form-group
+                label(for="p_image") Image
+                input(type="file" id="p_image" name="img" class="form-control")
+            div.form-group
+                label(for="p_price") Price
+                input(type="text" id="p_price" name="price" class="form-control")
+            div.from-group
+                label(for="p_category__name") Name
+                select(id="p_category__name" name="category_id" class="form-control")
+                    each category in categories
+                        option(value=category.id name=category.name) #{category.name}
+                div.form-group
+                label(for="p_description") Description
+                textarea(id="p_description" name="description" rows="7" class="form-control")
+            div.form-group
+                button(type="submit" id="p_btn") Add Product
+
+    script(src="/js/addProduct.js")

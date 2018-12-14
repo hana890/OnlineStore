@@ -1,0 +1,72 @@
+<%- include ../head.ejs %>
+<%- include ../menu.ejs %>
+
+<div class="container-product">
+    <h1 class="text-center-2">Product</h1>
+    <div class="page-area">
+        <div class="filter-area">
+            <ul>
+                <label class="input-container">
+                    <input type="checkbox" class="checkbox" value="Men">
+                    <span class="checkmark"></span>Men
+                </label>
+                <label class="input-container">
+                    <input type="checkbox" class="checkbox" value="Women">
+                    <span class="checkmark"></span>Women
+                </label>
+                <label class="input-container">
+                    <input type="checkbox" class="checkbox" value="Child"> Child
+                    <span class="checkmark"></span>
+                </label>
+                <label class="input-container">
+                    <input type="checkbox" class="checkbox" value="Sport"> Sport
+                    <span class="checkmark"></span>
+                </label>
+                <div class="range-area">
+                    <label>0 &nbsp;<input type="range" value="0"> &nbsp; 50 000</label>
+                    <span id="rPrice">0</span>
+                </div>
+
+            </ul>
+        </div>
+
+        <div class="product-area">
+            <% for(var i=0; i < products.length; i++) {%>
+            <div class="product-item" data-id='<%= products[i].category_id %>'>
+
+                <div class="product_inner">
+
+                    <div class="product-block-image">
+                        <img src='/../../public/uploads/<%= products[i].img %>'>
+                    </div>
+
+                    <h4><%= products[i].name %></h4>
+                    <p><%= products[i].description.slice(0,20) + "....." %></p>
+                    <p><%= products[i].price %><span>&nbsp; AMD</span></p>
+
+                    <div class="btn-block">
+                        <button class="add-product" data-id='<%= products[i].id %>' data-price='<%= products[i].price %>' data-name='<%= products[i].name %>' >Add Product</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <% } %>
+        </div>
+    </div>
+
+    <div id="mega-menu">
+
+        <div><img src="../../public/images/count-pro.png"> <span id="cal-count"></span></div>
+        <div><img src="../../public/images/coin.png"> <span id="cal-price"></span></div>
+
+        <div id="buy-btn">
+            <a href="/cart"> <img src="../../public/images/add-product.png"></a>
+        </div>
+    </div>
+</div>
+
+<script src="/js/getProduct.js"></script>
+<script src="/js/pro.js"></script>
+<%- include ../footer.ejs %>

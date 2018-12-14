@@ -1,0 +1,133 @@
+<%- include ../head.ejs %>
+<%- include ../menu.ejs %>
+<div class="profile-area">
+
+    <div class="profile-img-bg">
+        <h1>My profile</h1>
+
+        <div class="profile-avatar-area">
+            <form>
+
+                <img src="../../public/images/avatar.png">
+
+                <div id="add-avatar">
+                    <form action="addAvatar" method="POST" enctype="multipart/form-data">
+
+                        <img src="../../public/images/upload-avatar.png">
+                        <input type="file" onchange="previewFile(this)">
+
+                        <h3 class="text-center">Add Avatar</h3>
+                    </form>
+                </div>
+
+            </form>
+
+            <div class="user-name-area">
+                <h2><%= title %></h2>
+            </div>
+
+        </div>
+
+        <div class="profile-inform-menu">
+            <ul>
+                <li><a>Information</a></li>
+                <li><a>Friends</a></li>
+                <li><a>Images</a></li>
+                <li><a>Posts</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <div class="profile-section-area">
+
+        <div class="bar"></div>
+
+        <div class="tape-area">
+
+            <div class="post-area">
+                <div class="wr-text">Write Post</div>
+            </div>
+
+            <div class="us-info-area">
+
+                <div class="us-info-item">
+                    <span>Country</span>
+
+                    <div class="chang-data">
+                        <span>C</span> <img src="../../public/images/pen-solid.svg" class="fa-icon">
+                    </div>
+                    <div>
+                        <input type="text"><img src="../../public/images/ok.svg" class="fa-icon">
+                    </div>
+                </div>
+
+                <div class="us-info-item">
+                    <span>City</span>
+
+                    <div class="chang-data">
+                        <span>C</span> <img src="../../public/images/pen-solid.svg" class="fa-icon">
+                    </div>
+                    <div>
+                        <input type="text"><img src="../../public/images/ok.svg" class="fa-icon">
+                    </div>
+                </div>
+
+                <div class="us-info-item">
+                    <span>E-mail</span>
+
+                    <div class="chang-data">
+                        <span>C</span> <img src="../../public/images/pen-solid.svg" class="fa-icon">
+                    </div>
+                    <div>
+                        <input type="text"><img src="../../public/images/ok.svg" class="fa-icon">
+                    </div>
+                </div>
+
+                <div class="save-data">
+                    <span>Save Data</span>
+                    <img src="../../public/images/ok.svg" class="fa-save">
+                </div>
+
+            </div>
+
+            <div class="us-img-area">
+                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
+                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
+                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
+                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
+                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
+                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
+
+            </div>
+
+            <div class="friends-area">
+
+                <div class="add-post-area">
+                    <form>
+                        <textarea>
+                        </textarea>
+
+                        <input type="submit">
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+<script>
+   function previewFile(Fx) {
+       if (Fx.files && Fx.files[0]) {
+           var img = document.querySelector('form img');
+           img.src = URL.createObjectURL(Fx.files[0]);
+       }
+   }
+</script>
+<%- include ../footer.ejs %>

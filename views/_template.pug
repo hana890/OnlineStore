@@ -1,0 +1,26 @@
+doctype html
+html
+    head
+        meta(content="" name="author")
+        meta(content="" name="description")
+        title
+        meta(content="" name="keywords")
+        link(rel="stylesheet" href="/css/main.css")
+        script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
+    body
+        div.container-main
+           div.top-menu
+            ul
+                li
+                   a(href="/products") Products
+                li
+                    a(href="/category") Category
+                li
+                   a(href="/addProduct") AddProduct
+                li
+                    a(href="/addCategory") AddCategory
+                li
+                    a(href="/profile") My Profile
+        block content
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
+    script(src="/js/main.js")

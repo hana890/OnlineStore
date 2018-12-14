@@ -1,0 +1,70 @@
+<%- include ../head.ejs %>
+<%- include ../menu.ejs %>
+
+<div class="card-bo">
+    <div id="cart-bg">
+        <h1 class="text-center">Buy Products</h1>
+        <div class="cart-tab">
+            <table>
+                <thead>
+                <tr>
+                    <td>Product Name</td>
+                    <td>Product Count</td>
+                    <td>Product Price</td>
+                    <td>
+                    </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                <% if(products !== null){ for(var i=0; i < products.length -1; i++) {%>
+                <tr>
+                    <td><%= products[i].name %></td>
+                    <td><%= products[i].count %></td>
+                    <td><%= products[i].price %></td>
+                    <td><img class="remove_product" src="../../public/images/close.png"></td>
+                </tr>
+                <% } } %>
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="text-center">
+            <form  action="charge" method="POST">
+                <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_gtc6KFOUoVdWoLoTZcLrV9x4"
+                        data-amount="<% if(products !== null){%> <%= products[products.length - 1].sum * 100 %><% } %>"
+                        data-name="Demo Site"
+                        data-description="Example charge"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                        data-locale="auto">
+                </script>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var rBtn = document.querySelectorAll('.remove_product');
+    [].forEach.call(rBtn, function (item) {
+        item.addEventListener('click', removeProduct);
+    });
+    function removeProduct(){
+        var parent = this.parentNode.parentNode;
+        var tBody = parent.parentNode;
+        var pName = parent.textContent;
+        var repName = pName.replace(/[0-9]+\-$/, " ");
+        var repNameTrim = repName.trim();
+        tBody.removeChild(parent);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/cart/remove', true);
+        xhr.onload = function () {
+            console.log(xhr.responseText);
+        }
+        xhr.send(JSON.stringify({pName: repNameTrim}));
+    }
+</script>
+<%- include ../footer.ejs %>

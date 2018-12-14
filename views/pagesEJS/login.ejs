@@ -1,0 +1,32 @@
+<%- include ../head.ejs %>
+<div class="context">
+    <h1 class="text-center">Welcome login page</h1>
+    <div class="container-form login">
+        <form action="/login" method="POST">
+             <span class="login100-form-logo">
+		   	    <i class="zmdi zmdi-landscape"></i>
+		    </span>
+            <h2> Log in </h2>
+            <div class="form-group">
+                <label rel="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="Username">
+            </div>
+
+            <div class="form-group">
+                <label rel="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Password">
+            </div>
+
+            <div class="form-group_checkbox">
+                <input type="checkbox" name="checkbox" id="checkbox">
+                <span>Keep me Signed in</span>
+            </div>
+
+            <button type="submit">Sign In</button>
+        </form>
+        <li><a href="/passwordRecovery">Forgot Password?</a></li>
+        <a id="login_btn" href="/register">Sign Up</a>
+    </div>
+</div>
+<%- include ../bodyAnimated.ejs %>
+<%- include ../footer.ejs %>

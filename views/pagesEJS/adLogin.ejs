@@ -1,0 +1,57 @@
+<%- include ../head.ejs %>
+
+<div class="context">
+    <h1 class="text-center">Welcome admin page</h1>
+    <div class="container-form">
+        <form action="/adLogin" method="POST">
+
+        <span class="login100-form-logo">
+		   	    <i class="zmdi zmdi-landscape"></i>
+		    </span>
+            <h2>Admin</h2>
+
+            <div class="form-group">
+                <label rel="username">Username</label>
+                <input type="text" name="username" id="username">
+            </div>
+
+            <div class="form-group">
+                <label rel="password">Password</label>
+                <input type="password" name="password" id="password">
+            </div>
+
+            <button type="submit" id="sub">Sign In</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    var username = document.querySelector('#username');
+    var password = document.querySelector('#password');
+
+
+    function signIn() {
+        // var data = {
+        //     username: username.value,
+        //     password:password.value,
+        //     role:"admin"
+        // };
+        // sendXhr(data);
+    }
+
+    function sendXhr(data) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/adLogin", true);
+        xhr.onload = function () {
+            var response = JSON.parse(xhr.responseText);
+            response.message.forEach(function (item) {
+                //getProduct(item, productArea);
+            });
+        };
+        xhr.send(data);
+    }
+
+</script>
+<%- include ../bodyAnimated.ejs %>
+<%- include ../footer.ejs %>

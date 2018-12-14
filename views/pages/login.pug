@@ -1,0 +1,18 @@
+extends ../_template
+block content
+    h2.text-center Welcome login page
+    div.container-form
+        form(action="/login" method="POST")
+           div.form-group
+               label(rel="username") Username
+               input(type="text" name="username" id="username")
+           div.form-group
+               label(rel="password") Password
+               input(type="password" name="password" id="password")
+           div.form-group_checkbox
+               input(type="checkbox" name="checkbox" id="checkbox")
+               span Keep me Signed in
+           button(type="submit") Sign In
+        a(href="/passwordRecovery") Forgot Password?
+        span No profile in site
+        a(href="/register") Sign Up

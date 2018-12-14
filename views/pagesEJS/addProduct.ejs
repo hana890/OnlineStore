@@ -1,0 +1,51 @@
+<%- include ../head.ejs %>
+<%- include ../menu.ejs %>
+
+
+<div class="add-product-area">
+    <span> xxxx </span>
+    <div class="container-form">
+        <form action="addProduct" method="POST" enctype="multipart/form-data">
+
+            <h2> Add Category </h2>
+
+            <div class="form-group">
+                <label for="p_name">Name</label>
+                <input type="text" id="p_name" name="name" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="p_image">Image</label>
+                <input type="file" id="p_image" name="img" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="p_price">Price</label>
+                <input type="text" id="p_price" name="price" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="p_category__name">Category Name</label>
+                <select id="p_category__name" name="category_id" class="form-control">
+                    <% for(var i=0; i < categories.length; i++) {%>
+                    <option value='<%= categories[i].id %>' name='<%= categories[i].name %>'> <%= categories[i].name %></option>
+                    <% } %>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label for="p_description">Description</label>
+                <textarea id="p_description" name="description" rows="7" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" id="p_btn">Add Product</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script src="/js/addProduct.js"></script>
+<%- include ../footer.ejs %>

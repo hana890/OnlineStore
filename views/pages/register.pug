@@ -1,0 +1,21 @@
+extends ../_template
+block content
+    h2.text-center Welcome Register page
+    div.container-form
+        form(action="/register" method="POST")
+            div.form-group
+                label(rel="username") Username
+                input(type="text" name="username" id="username")
+            div.form-group
+                label(rel="email") E-mail
+                input(type="email" name="email" id="email" required)
+            div.form-group
+                label(rel="password" ) Password
+                input(type="password" name="password" id="password")
+            div.form-group
+                label(rel="repeatPassword" ) Repeat Password
+                input(type="repeatPassword" name="repeatPassword" id="repeatPassword")
+            button(type="submit" id="p_btn") Sign Up
+
+script(src="/js/RegisterValidation.js")
+
