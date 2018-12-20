@@ -31,17 +31,21 @@
         </div>
 
         <div class="text-center">
+
             <form  action="charge" method="POST">
                 <script
                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key="pk_test_gtc6KFOUoVdWoLoTZcLrV9x4"
                         data-amount="<% if(products !== null){%> <%= products[products.length - 1].sum * 100 %><% } %>"
-                        data-name="Demo Site"
+                        data-name="Online Store"
+                        data-currency="amd"
                         data-description="Example charge"
                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
                         data-locale="auto">
                 </script>
+                <input type="hidden" name="chargeAmount" value="<% if(products !== null){%> <%= products[products.length - 1].sum *100 %><% } %>">
             </form>
+
         </div>
     </div>
 

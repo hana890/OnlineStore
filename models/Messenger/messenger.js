@@ -9,6 +9,14 @@ module.exports = function (pool) {
             pool.query("SELECT * FROM messenger WHERE ((recipient_id = ?) AND (sender_id =?)) OR ((sender_id =?) AND (recipient_id = ?))"
                 ,[sender_id,recipient_id,sender_id,recipient_id]
                 , cb);
+        },
+        sendMessages(sender_id,recipient_id,date,text,cb){
+            pool.query("INSERT INTO messenger SET ?",
+                {   sender_id,
+                    recipient_id,
+                    date,
+                    text
+                }, cb);
         }
     }
 };

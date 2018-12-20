@@ -16,17 +16,17 @@ module.exports = function (products) {
                 var data = JSON.parse(chunk.toString());
                 switch (data.filter) {
                     case "all":
-                        products.getProducts(call);
+                        products.getProducts(cb);
                         break;
                     case "category":
-                        products.findProductByCategoryName(data.category, call);
+                        products.findProductByCategoryName(data.category, cb);
                         break;
                     case "price":
-                        products.findProductByPrice(data.price, call);
+                        products.findProductByPrice(data.price, cb);
                         break;
                 }
 
-                function call(err, rows) {
+                function cb(err, rows) {
                     if (!err) {
                         res.send(200, {message: rows});
                     }

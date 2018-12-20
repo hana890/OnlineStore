@@ -1,10 +1,12 @@
+var isCart = 0;
 module.exports = function (user) {
-
     return {
         login(req, res) {
             if (req.isAuthenticated()){
                 res.redirect("/home");
-            }else {
+            } else {
+               // console.log(req.query.isCart);
+                isCart = req.query.isCart;
                 res.render("pagesEJS/login", {
                     title: "Login"
                 })
@@ -30,20 +32,16 @@ module.exports = function (user) {
                 });
         },
         postLogin(req, res) {
-            res.redirect("/home");
+            if (isCart){
+                isCart = 0;
+                res.redirect("/cart");
+            }else {
+                res.redirect('/home');
+            }
         },
 
         postAdminLogin(req, res) {
-            console.log("admin.isAuthenticated(): " + req.isAuthenticated());
-            res.redirect('/home');
+            res.redirect("/home");
         }
-
-        // ,
-        // logout(req, res) {
-        //     console.log("admin.isAuthenticated(): " + req.isAuthenticated());
-        //     req.logout();
-        //     res.redirect('/login');
-        //
-        // }
     }
 };

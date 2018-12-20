@@ -15,8 +15,8 @@ module.exports = function (category, product) {
             product.createProduct(
                 req.body.name,
                 req.body.price,
-                req.body.description,
                 req.file.filename,
+                req.body.description,
                 req.body.category_id,
                 function (err, rows) {
                     console.log(err);

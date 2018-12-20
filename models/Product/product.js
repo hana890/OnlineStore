@@ -1,11 +1,11 @@
 module.exports = function (pool) {
     return{
-        createProduct(name, price, description, img, category_id, cb){
+        createProduct(name, price, img, description, category_id, cb){
             pool.query("INSERT INTO products SET ?", {
                 name,
                 price,
-                description,
                 img,
+                description,
                 category_id
             }, cb);
         },

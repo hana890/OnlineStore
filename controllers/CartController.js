@@ -2,10 +2,17 @@ module.exports = function (localStorage) {
     return {
         index(req, res){
             let cart = JSON.parse(localStorage.getItem('cart'));
-            res.render('pagesEJS/cart',{
-                products: cart,
-                title:"Cart"
-            });
+            if(req.isAuthenticated()){
+                //console.log('cart');
+                res.render('pagesEJS/cart',{
+                    products: cart,
+                    title:"Cart"
+                });
+            } else {
+                //console.log('red-login');
+                res.redirect("/login/?isCart=145");
+            }
+
         },
         getCartVal(req, res){
             req.on("data", function (chunk) {
@@ -29,11 +36,3 @@ module.exports = function (localStorage) {
         }
     };
 };
-
-function sum(products) {
-    var sum = 0;
-    for (let i in products) {
-        sum += products.price;
-    }
-    return sum;
-}

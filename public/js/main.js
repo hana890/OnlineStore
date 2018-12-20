@@ -4,7 +4,8 @@ var menu = $(".container-menu");
 var ms_menu = $('.ms-menu');
 var ms_area = $('.ms-area');
 var ms_input = $('.ms-input input');
-var rId = 0,sId = 0;
+var rId = 0, sId = 0;
+var pSearch = $('.menu-item input');
 
 /*
 get scrolling event
@@ -25,8 +26,11 @@ $("#toTop").click(function () {
 });
 
 
-$("#profile-avatar").click(function () {
-    $(".account-menu ul li ul").toggle();
+pSearch.keyup(function(e){
+    if(e.key === 'Enter' && $(this).val().length > 2)
+    {
+        console.log($(this).val());
+    }
 });
 
 /*
@@ -50,9 +54,27 @@ $("#close-menu").click(function () {
     // menu.next().css({"margin-right": "350px",}).show(1500).animate({"margin-right": "0"});
 });
 
+/*
+Toggle profile tab-menu
+ */
+
+
+
+ var pPrev = 0;
+$('.profile-inform-menu ul li').click(function () {
+    var tab = $('.tape-area >div');
+    var pNext = $(this).index();
+    tab.eq(pPrev).css('display', 'none');
+    if (pNext === 2) tab.eq(pNext).css('display', 'flex');
+    else tab.eq(pNext).css('display', 'block');
+    console.log('pNext: ' + pNext);
+    console.log('pPrev: ' + pPrev);
+    pPrev = pNext;
+});
+
 
 /*
-Toggle display messages list
+Toggle display messages msList
  */
 
 $("#messenger-area").click(function () {
@@ -71,43 +93,56 @@ $("#messenger-area").click(function () {
 Send Request messages list
  */
 
+var msList;
+
 function sendXhrMs(data) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/messenger", true);
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText);
         ms.html("");
+        msList = [{recipient_id:'test'}];
         response.message.forEach(function (item) {
-            var keyNames = Object.keys(item);
             getMsList(item, ms);
-            //console.log("keyNames : " + keyNames);
         });
     };
     xhr.send(JSON.stringify(data));
 }
 
 
-function getMsList(item, ms) {
-    var divItem = $('<div></div>').attr("name", item.recipient_id);
-    divItem.addClass('ms_item', item.recipient_id);
-    openMsMenu(divItem, item.recipient_id,item.sender_id);
-
-    var img = $('<img>').attr('src', '/public/images/avatar.png');
-    var divIm = $('<div></div>').append(img);
-
-    var spanName = $('<h4></h4>').text(item.username);
-    var spanDate = $('<span></span>').text(item.date).addClass('right');
-    var spanText = $('<span></span>').text(item.text);
-
-    var divText = $('<div></div>').addClass('ms_text');
-    divText.append(spanName, spanDate, spanText);
-
-    divItem.append(divIm, divText);
-    ms.append(divItem);
+function isRecipientId(item) {
+       for (let i = 0; i < msList.length; i++) {
+           if (msList[i].recipient_id === item.recipient_id) {
+               return false;
+           }
+       }
+       msList.push(item);
+       console.log(item);
+       return true;
 }
 
 
+function getMsList(item, ms) {
+    if (isRecipientId(item)){
+        var divItem = $('<div></div>').attr("name", item.recipient_id);
 
+        divItem.addClass('ms_item', item.recipient_id);
+        openMsMenu(divItem, item.recipient_id, item.sender_id);
+
+        var img = $('<img>').attr('src', '/public/images/avatar.png');
+        var divIm = $('<div></div>').append(img);
+
+        var spanName = $('<h4></h4>').text(item.username);
+        var spanDate = $('<span></span>').text(item.date).addClass('right');
+        var spanText = $('<span></span>').text(item.text);
+
+        var divText = $('<div></div>').addClass('ms_text');
+        divText.append(spanName, spanDate, spanText);
+
+        divItem.append(divIm, divText);
+        ms.append(divItem);
+    }
+}
 
 
 function getChat(data) {
@@ -118,7 +153,7 @@ function getChat(data) {
         ms_area.html("");
         response.message.forEach(function (item) {
             var keyNames = Object.keys(item);
-           console.log(keyNames);
+            console.log(keyNames);
             getChatArea(item, ms_area);
         });
     };
@@ -126,7 +161,7 @@ function getChat(data) {
 
 }
 
-var socket = io.connect('http://localhost:8000/');
+var socket = io.connect('http://localhost:7000/');
 var isOpenRoom = false;
 
 $('.close-ms-menu').click(function () {
@@ -135,29 +170,30 @@ $('.close-ms-menu').click(function () {
     socket.emit('unsubscribe', (rId + sId) + 'www');
 });
 
-var r;
-function openMsMenu(el, recipient_id,sender_id) {
+function openMsMenu(el, recipient_id, sender_id) {
     var data = {rId: recipient_id};
 
     el.click(function () {
         rId = recipient_id;
         sId = sender_id;
         var text = el.find('.ms_text h4').eq(0).text();
-        ms_menu.css('display', 'block');
-        $('.us-n').text(text);
-
-        var room = (rId + sId) + 'www';
-        console.log(room);
-        socket.emit('subscribe', room);
-
-        getChat(data, text);
-        console.log("name: " + $(this).attr('name'));
+        openRoom(data,text);
     });
 }
 
+function openRoom(data,text){
+    ms_menu.css('display', 'block');
+    $('.us-n').text(text);
+    var room = (rId + sId) + 'www';
+    console.log(room);
+    socket.emit('subscribe', room);
+
+    getChat(data, text);
+    console.log("name: " + $(this).attr('name'));
+}
 
 
-$('.ms-send').click(function(){
+$('.ms-send').click(function () {
     var text = ms_input.val();
 
     if (text.length > 0) {
@@ -180,11 +216,10 @@ socket.on('new-ms', function (data) {
 });
 
 
-
 function getChatArea(item, ms_area) {
     var divItem = $('<div></div>').addClass('ms-item');
 
-    if (rId === item.recipient_id){
+    if (rId === item.recipient_id) {
         var div = $('<div></div>').addClass('send-ms');
     } else {
         var div = $('<div></div>').addClass('get-ms');
@@ -196,8 +231,6 @@ function getChatArea(item, ms_area) {
     divItem.append(div);
     ms_area.append(divItem);
 }
-
-
 
 
 var myProducts = [];
@@ -222,6 +255,8 @@ add_product.click(function () {
 // var getCloudsPosition = getAnimatePosition(1);
 // var getBackgroundPosition = getAnimatePosition(1.3);
 // var getForegroundPosition = getAnimatePosition(1.9);
+
+
 
 
 

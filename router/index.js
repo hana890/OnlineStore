@@ -1,24 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const app = express();
-const path = require('path');
 const multer = require("multer");
-
-const db = require('../config');
-const mysql = require("mysql");
-const pool = mysql.createPool(db);
-
-const localStorage = require('localStorage');
+const pool = require('../config/pool');
 
 var stripe = require("stripe")("sk_test_zcOspggiLXx88YFmGOYRsEyT");
 
-stripe.balance.retrieveTransaction(
-    "txn_1Dh1zr2eZvKYlo2Cfjs29NDb",
-    function(err, balanceTransaction) {
-        // asynchronously called
-    }
-);
+// stripe.balance.retrieveTransaction(
+//     "txn_1Dh1zr2eZvKYlo2Cfjs29NDb",
+//     function(err, balanceTransaction) {
+//         // asynchronously called
+//     }
+// );
 
 
 /**
@@ -37,7 +30,7 @@ const AuthController = require('../controllers/login/AuthController')(User);
 const AddProductController = require('../controllers/AddProductController')(Category, Product);
 
 const ProductsController = require('../controllers/ProductsController')(Product);
-const CartController = require('../controllers/CartController.js')(localStorage);
+
 
 const AddCategoryController = require('../controllers/AddCategoryController');
 const PasswordRecovery = require('../controllers/login/PasswordRecovery');
@@ -73,7 +66,12 @@ load menu pages
 router.get('/products', ProductsController.index);
 
 router.post('/charge', (req, res) => {
-    const amount = 2500;
+    const amount = parseInt(req.body.chargeAmount);
+
+    // var keys = Object.keys('req.body:' + req.body);
+    // for (let i in  req) {
+    //     console.log(i);
+    // }
 
     stripe.customers.create({
         email: req.body.stripeEmail,
@@ -81,16 +79,12 @@ router.post('/charge', (req, res) => {
     })
         .then(customer => stripe.charges.create({
             amount,
-            description: 'Web Development Ebook',
+            description: 'Example charge',
             currency: 'amd',
             customer: customer.id
         }))
         .then(charge => res.send('The Purchase Transaction Was Successful'));
 });
-
-router.get('/cart',CartController.index);
-router.post('/cart',CartController.getCartVal);
-router.post('/cart/remove',CartController.removeProduct);
 
 router.all('/filter', ProductsController.filter);
 

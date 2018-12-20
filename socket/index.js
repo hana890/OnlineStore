@@ -1,3 +1,5 @@
+const pool = require('../config/pool');
+const Messenger = require('../models/Messenger/messenger')(pool);
 module.exports = function (server) {
     var io = require('socket.io').listen(server);
     var room = 'room#';
@@ -26,15 +28,18 @@ module.exports = function (server) {
             // console.log("data.text: " + data.text);
             var room = (data.sender_id + data.recipient_id) + 'www';
             io.sockets.in(room).emit('new-ms', data);
+            Messenger.sendMessages(data.sender_id,data.recipient_id,data.date,data.text,function (err,rows) {
+              //  console.log('ms: ' + err);
+            })
         });
 
         socket.on('unsubscribe', function (room) {
             try {
-                console.log('[socket]', 'leave room :', room);
+               // console.log('[socket]', 'leave room :', room);
                 socket.leave(room);
                 // socket.to(room).emit('user left', socket.id);
             } catch (e) {
-                console.log('[error]', 'leave room :', e);
+               // console.log('[error]', 'leave room :', e);
                 //socket.emit('error','couldnt perform requested action');
             }
         })

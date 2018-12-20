@@ -1,133 +1,201 @@
 <%- include ../head.ejs %>
 <%- include ../menu.ejs %>
-<div class="profile-area">
+<div id="pr-main-bg">
+    <div class="profile-area">
 
-    <div class="profile-img-bg">
-        <h1>My profile</h1>
+        <div class="profile-img-bg">
+            <h1>My profile</h1>
 
-        <div class="profile-avatar-area">
-            <form>
+            <div class="profile-avatar-area">
+                <form action="addAvatar" method="POST" enctype="multipart/form-data">
 
-                <img src="../../public/images/avatar.png">
+                    <img id="us-av" name="<%= us_id %>" src="../../public/images/avatar.png">
 
-                <div id="add-avatar">
-                    <form action="addAvatar" method="POST" enctype="multipart/form-data">
+                    <div id="add-avatar">
 
-                        <img src="../../public/images/upload-avatar.png">
-                        <input type="file" onchange="previewFile(this)">
+                        <div id="up-img-bg">
+                            <img src="../../public/images/upload-avatar.png">
+                            <input type="file" name="avatar" onchange="previewFile(this)">
 
-                        <h3 class="text-center">Add Avatar</h3>
-                    </form>
+                            <h3 class="text-center">Add Avatar</h3>
+                        </div>
+
+                        <div id="up-img-sub">
+                            <div id="ch-up-btn"><input type="hidden"><img src="../../public/images/cancel.png"></div>
+                            <div id="ok-up-btn">
+
+                                <button type="submit">
+                                    <img src="../../public/images/ok-save.svg"/>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+                <div class="user-name-area">
+                    <h2><%= title %></h2>
                 </div>
 
-            </form>
-
-            <div class="user-name-area">
-                <h2><%= title %></h2>
             </div>
+
+
 
         </div>
 
-        <div class="profile-inform-menu">
-            <ul>
-                <li><a>Information</a></li>
-                <li><a>Friends</a></li>
-                <li><a>Images</a></li>
-                <li><a>Posts</a></li>
-            </ul>
-        </div>
 
-    </div>
+        <div class="profile-section-area">
 
-
-    <div class="profile-section-area">
-
-        <div class="bar"></div>
-
-        <div class="tape-area">
-
-            <div class="post-area">
-                <div class="wr-text">Write Post</div>
+            <div class="profile-inform-menu">
+                <ul>
+                    <li><a>Posts</a></li>
+                    <li><a>Information</a></li>
+                    <li id="get-image-list"><a>Images</a></li>
+                </ul>
             </div>
 
-            <div class="us-info-area">
+            <div class="tape-area">
 
-                <div class="us-info-item">
-                    <span>Country</span>
-
-                    <div class="chang-data">
-                        <span>C</span> <img src="../../public/images/pen-solid.svg" class="fa-icon">
-                    </div>
-                    <div>
-                        <input type="text"><img src="../../public/images/ok.svg" class="fa-icon">
-                    </div>
+                <div class="post-area">
+                    <div class="wr-text">Write Post</div>
                 </div>
 
-                <div class="us-info-item">
-                    <span>City</span>
+                <div class="us-info-area">
 
-                    <div class="chang-data">
-                        <span>C</span> <img src="../../public/images/pen-solid.svg" class="fa-icon">
+                    <div class="us-info-item">
+                        <span>Country</span>
+
+                        <div class="chang-data">
+                            <span>C</span> <img src="../../public/images/pen-solid.svg" class="fa-icon">
+                        </div>
+                        <div>
+                            <input type="text"><img src="../../public/images/ok.svg" class="fa-icon">
+                        </div>
                     </div>
-                    <div>
-                        <input type="text"><img src="../../public/images/ok.svg" class="fa-icon">
+
+                    <div class="us-info-item">
+                        <span>City</span>
+
+                        <div class="chang-data">
+                            <span>C</span> <img src="../../public/images/pen-solid.svg" class="fa-icon">
+                        </div>
+                        <div>
+                            <input type="text"><img src="../../public/images/ok.svg" class="fa-icon">
+                        </div>
                     </div>
+
+                    <div class="us-info-item">
+                        <span>E-mail</span>
+
+                        <div class="chang-data">
+                            <span>C</span> <img src="../../public/images/pen-solid.svg" class="fa-icon">
+                        </div>
+                        <div>
+                            <input type="text"><img src="../../public/images/ok.svg" class="fa-icon">
+                        </div>
+                    </div>
+
+                    <div class="save-data">
+                        <span>Save Data</span>
+                        <img src="../../public/images/ok.svg" class="fa-save">
+                    </div>
+
                 </div>
 
-                <div class="us-info-item">
-                    <span>E-mail</span>
+                <div class="us-img-area">
 
-                    <div class="chang-data">
-                        <span>C</span> <img src="../../public/images/pen-solid.svg" class="fa-icon">
-                    </div>
-                    <div>
-                        <input type="text"><img src="../../public/images/ok.svg" class="fa-icon">
-                    </div>
                 </div>
 
-                <div class="save-data">
-                    <span>Save Data</span>
-                    <img src="../../public/images/ok.svg" class="fa-save">
-                </div>
+                <div class="friends-area">
 
-            </div>
-
-            <div class="us-img-area">
-                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
-                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
-                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
-                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
-                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
-                <div><img src="../../public/uploads/img-1544300665483.jpeg"></div>
-
-            </div>
-
-            <div class="friends-area">
-
-                <div class="add-post-area">
-                    <form>
+                    <div class="add-post-area">
+                        <form>
                         <textarea>
                         </textarea>
 
-                        <input type="submit">
-                    </form>
+                            <input type="submit">
+                        </form>
+                    </div>
+
                 </div>
 
             </div>
 
+
         </div>
 
-
     </div>
-
-
 </div>
 <script>
-   function previewFile(Fx) {
-       if (Fx.files && Fx.files[0]) {
-           var img = document.querySelector('form img');
-           img.src = URL.createObjectURL(Fx.files[0]);
-       }
-   }
+    var img = document.querySelector('form img');
+    var TempImgSrc ;
+    function previewFile(Fx) {
+        TempImgSrc = img.src;
+        if (Fx.files && Fx.files[0]) {
+            img.src = URL.createObjectURL(Fx.files[0]);
+            $('#up-img-sub').css('display', 'flex');
+        }
+    }
+
+    $('#ch-up-btn').click(function () {
+        $('#up-img-sub').css('display', 'none');
+        img.src = TempImgSrc;
+    });
+
+
+
+</script>
+<script>
+
+    var userImgData = {
+        id:parseInt($('#us-av').attr('name'))
+    };
+
+    window.onload = function () {
+        getUImage(userImgData,getAvatar);
+        console.log('jjj: ' + userImgData.id +  "  tp: " + typeof userImgData.id);
+    };
+
+    $('#get-image-list').click(function () {
+        getUImage(userImgData,getImageList);
+    });
+
+    function getUImage(data,cb) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/getAvatar", true);
+        xhr.onload = function () {
+            var response = JSON.parse(xhr.responseText);
+               cb(response.message);
+        };
+        xhr.send(JSON.stringify(data));
+    }
+
+    function getImageList(imgList) {
+        var imgArea = $(".us-img-area");
+        imgArea.html("");
+        console.log('imgList.length:' + imgList.length);
+        if (imgList.length === 0){
+            var div = $('<div></div>').text("No image");
+            div.addClass('no-img');
+            imgArea.append(div);
+             return -1;
+        }
+        for (let i = imgList.length - 1; i >= 0; i--) {
+            var div = $('<div></div>');
+            var src = imgList[i].src;
+            var img = $('<img>').attr('src', "/../../public/avatar/" + src);
+            div.append(img);
+            imgArea.append(div);
+        }
+    }
+
+    function getAvatar(imgList) {
+        if (imgList.length !== 0){
+            var srcAvatar = imgList[imgList.length - 1].src;
+            $('#us-av').attr('src', "/../../public/avatar/" + srcAvatar);
+        }else return -1;
+    }
+
 </script>
 <%- include ../footer.ejs %>

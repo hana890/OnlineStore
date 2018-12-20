@@ -1,0 +1,26 @@
+@media (max-width: 855px)  and (min-width: 300px) {
+    .profile-img-bg {
+         position: unset;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 330px;
+        padding: 10px 0;
+    }
+
+    .profile-avatar-area{
+        position: unset;
+    }
+
+    .profile-inform-menu{
+        display: block;
+    }
+    .profile-inform-menu li {
+        display: block;
+        border-bottom: 1px solid #ffffffa6;
+    }
+    .profile-inform-menu li:last-child {
+        border-bottom: none;
+    }
+}
