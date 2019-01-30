@@ -4,7 +4,8 @@ module.exports = function (user) {
           // console.log(`req.user: ${JSON.stringify(req.user)}`);
 
             if (req.isAuthenticated() && user.token  === 'users'){
-                user.getUser(req.user[0].id, cb);
+                if (req.params.id) user.getUser(req.params.id, cb);
+                else user.getUser(req.user[0].id, cb);
             }
             else if (req.isAuthenticated() && user.token  === 'admin') {
                 user.getAdmin(req.user[0].id,cb);
@@ -21,6 +22,8 @@ module.exports = function (user) {
                         title: "" + rows[0].username,
                         us_id: "" + rows[0].id,
                     });
+                }else {
+                    res.send("404");
                 }
             }
         },

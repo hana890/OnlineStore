@@ -64,6 +64,7 @@ load menu pages
  */
 
 router.get('/products', ProductsController.index);
+router.get('/products/:id', ProductsController.indexParams);
 
 router.post('/charge', (req, res) => {
     const amount = parseInt(req.body.chargeAmount);

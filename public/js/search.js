@@ -34,6 +34,7 @@ function searchUsers(data) {
 function createUserItem(item) {
     var div = $('<div></div>').addClass('search-res-item');
     var divImg = $('<div></div>');
+    var href = $('<a></a>').attr('href','profile/' + item.id);
     var Img = $('<img>').attr('src', '../../public/images/avatar.png');
 
     var divName = $('<div></div>').addClass('se-pe-name');
@@ -47,7 +48,8 @@ function createUserItem(item) {
     msBtm.attr('onClick', msOnClick(msBtm));
     var btn = $('<span></span>').text('Write');
 
-    divImg.append(Img);
+    href.append(Img);
+    divImg.append(href);
     div.append(divImg);
     divName.append(name);
     msBtm.append(btn);

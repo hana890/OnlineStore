@@ -7,6 +7,7 @@ var ms_input = $('.ms-input input');
 var rId = 0, sId = 0;
 var pSearch = $('.menu-item input');
 
+
 /*
 get scrolling event
  */
@@ -60,7 +61,7 @@ Toggle profile tab-menu
 
 
 
- var pPrev = 0;
+var pPrev = 0;
 $('.profile-inform-menu ul li').click(function () {
     var tab = $('.tape-area >div');
     var pNext = $(this).index();
@@ -81,7 +82,7 @@ $("#messenger-area").click(function () {
     if (ms.css("display") === "none") {
         ms.css("display", "grid");
         var data = {
-            messenger: "Messenger"
+            messages: "Messages"
         };
         sendXhrMs(data);
     } else {
@@ -97,12 +98,12 @@ var msList;
 
 function sendXhrMs(data) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/messenger", true);
+    xhr.open("POST", "/messages", true);
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText);
         ms.html("");
-        msList = [{recipient_id:'test'}];
-        response.message.forEach(function (item) {
+        msList = [{recipient_id:'test',sender_id:'test'}];
+        response.message.reverse().forEach(function (item) {
             getMsList(item, ms);
         });
     };
@@ -111,13 +112,15 @@ function sendXhrMs(data) {
 
 
 function isRecipientId(item) {
-       for (let i = 0; i < msList.length; i++) {
-           if (msList[i].recipient_id === item.recipient_id) {
+       for (let i = msList.length - 1; i > -1; i--) {
+           if (msList[i].recipient_id === item.recipient_id || msList[i].sender_id === item.recipient_id) {
                return false;
            }
+           // else if(msList[i].sender_id === item.sender_id && item.id === item.sender_id){
+           //     return false;
+           // }
        }
        msList.push(item);
-       console.log(item);
        return true;
 }
 
@@ -127,7 +130,12 @@ function getMsList(item, ms) {
         var divItem = $('<div></div>').attr("name", item.recipient_id);
 
         divItem.addClass('ms_item', item.recipient_id);
-        openMsMenu(divItem, item.recipient_id, item.sender_id);
+        if (item.id === item.recipient_id) {
+            openMsMenu(divItem, item.recipient_id, item.sender_id);
+        }else {
+            openMsMenu(divItem,item.sender_id, item.recipient_id);
+        }
+
 
         var img = $('<img>').attr('src', '/public/images/avatar.png');
         var divIm = $('<div></div>').append(img);

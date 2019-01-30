@@ -1,5 +1,5 @@
 const pool = require('../config/pool');
-const Messenger = require('../models/Messenger/messenger')(pool);
+const Messenger = require('../models/Chat/messages')(pool);
 module.exports = function (server) {
     var io = require('socket.io').listen(server);
     var room = 'room#';

@@ -32,7 +32,7 @@ const localStorage = require('localStorage');
  */
 
 const User = require('../models/User/user')(pool);
-const Messenger = require('../models/Messenger/messenger')(pool);
+const Chat = require('../models/Chat/messages')(pool);
 
 /**
  * Controllers
@@ -85,7 +85,6 @@ passport.deserializeUser(function (data, done) {
     if (token === 'users'){
         User.findById(data.id,cb);
         User.setIsLogin(data.id,1,function (err, rows) {
-            console.log("err:" + err);
             // console.log(`req.rows: ${JSON.stringify(rows)}`)
         })
     }
@@ -101,14 +100,16 @@ passport.deserializeUser(function (data, done) {
 });
 
 
-router.all('/messenger', function (req, res) {
+router.all('/messages', function (req, res) {
     if (req.isAuthenticated()){
         req.on("data", function (chunk) {
-            var data = JSON.parse(chunk.toString());
-            Messenger.getMessages(req.user[0].id, call);
+           // var data = JSON.parse(chunk.toString());
+            Chat.getMessages(req.user[0].id, call);
             function call(err, rows) {
                 if (!err) {
                     res.send(200, {message: rows});
+                }else {
+                   console.log('Error Ms')
                 }
             }
         });
@@ -119,7 +120,7 @@ router.all('/messenger', function (req, res) {
 router.all('/chat', function (req, res) {
     req.on("data", function (chunk) {
         var data = JSON.parse(chunk.toString());
-        Messenger.getChat(req.user[0].id, data.rId, call);
+        Chat.getChat(req.user[0].id, data.rId, call);
         function call(err, rows) {
             //  console.log("rows:" + rows);
             if (!err) {
@@ -142,7 +143,6 @@ router.post('/adLogin', passport.authenticate('admin',{ failureRedirect: '/login
 router.get('/logout', function (req, res) {
 
     User.setIsLogin(req.user[0].id,0,function (err, rows) {
-        console.log("errL:" + err);
         // console.log(`req.rows: ${JSON.stringify(rows)}`)
     });
 
@@ -158,6 +158,7 @@ router.get('/logout', function (req, res) {
 router.get('/home', HomeController.index);
 router.get('/search', SearchController.index);
 router.get('/profile', ProfileController.index);
+router.get('/profile/:id', ProfileController.index);
 router.all('/addAvatar', upload.single('avatar'), ProfileController.uploadImg);
 router.all('/getAvatar', ProfileController.getAvatar);
 router.all('/searchUsers', SearchController.searchUsers);

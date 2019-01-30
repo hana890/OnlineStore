@@ -20,9 +20,9 @@ app.set('view engine', "ejs");
 app.use('/public', express.static(path.join(__dirname,  "/public")));
 app.use('/css', express.static(path.join(__dirname, "/public/css")));
 app.use('/js', express.static(path.join(__dirname, "/public/js")));
-
 const log = fs.createWriteStream('error.log', {flags: 'a'});
 app.use(morgan('combined', {stream: log}));
+// app.use(morgan('dev'));
 
 
 app.use("/", require('./router/index'));
